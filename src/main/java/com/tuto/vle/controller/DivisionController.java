@@ -1,10 +1,10 @@
 package com.tuto.vle.controller;
 
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.DivisionDto;
@@ -28,7 +28,7 @@ public class DivisionController {
 
   @GetMapping("/divisions/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public List<DivisionDto> getDivisionDetailsByUniversityId(@PathParam("id") int id)
+  public List<DivisionDto> getDivisionDetailsByUniversityId(@PathVariable("id") int id)
       throws ResourceNotFoundException {
     return divisionService.getDivisionDetailsByUniversityId(USER_ID, id);
   }
