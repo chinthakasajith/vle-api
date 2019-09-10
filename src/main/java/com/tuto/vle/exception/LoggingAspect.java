@@ -28,7 +28,7 @@ public class LoggingAspect {
    */
   @Pointcut("within(@org.springframework.stereotype.Repository *)"
       + " || within(@org.springframework.stereotype.Service *)"
-      + " || within(@org.springframework.stereotype.Component *)")
+      + " || within(@org.springframework.web.bind.annotation.RestController *)")
   public void springBeanPointcut() {
     // Method is empty as this is just a Pointcut, the implementations are in the advices.
   }
@@ -36,7 +36,7 @@ public class LoggingAspect {
   /**
    * Pointcut that matches all Spring beans in the application's main packages.
    */
-  @Pointcut("within(com.tuto.vle.endpoint..*)" + " || within(com.tuto.vle.repositories..*)"
+  @Pointcut("within(com.tuto.vle.controller..*)" + " || within(com.tuto.vle.repositories..*)"
       + " || within(com.tuto.vle.service..*)")
   public void applicationPackagePointcut() {
     // Method is empty as this is just a Pointcut, the implementations are in the advices.
