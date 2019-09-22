@@ -64,8 +64,6 @@ public class Lesson implements Serializable {
     private Timestamp updatedDt;
     @Column(name="stream_url")
     private String streamUrl;
-    @Column(name="module_id", precision=10)
-    private int moduleId;
 
     /** Default constructor. */
     public Lesson() {
@@ -196,24 +194,6 @@ public class Lesson implements Serializable {
      */
     public void setStreamUrl(String aStreamUrl) {
         streamUrl = aStreamUrl;
-    }
-
-    /**
-     * Access method for moduleId.
-     *
-     * @return the current value of moduleId
-     */
-    public int getModuleId() {
-        return moduleId;
-    }
-
-    /**
-     * Setter method for moduleId.
-     *
-     * @param aModuleId the new value for moduleId
-     */
-    public void setModuleId(int aModuleId) {
-        moduleId = aModuleId;
     }
 
     /**

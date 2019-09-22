@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Version;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-@Entity(name = "event_owners")
-public class EventOwners extends AbstractPersistable<Long> implements Serializable {
+@Entity(name = "division_owners")
+public class DivisionOwners extends AbstractPersistable<Long> implements Serializable {
 
   /**
    * The optimistic lock. Available via standard bean get/set operations.
@@ -36,52 +36,52 @@ public class EventOwners extends AbstractPersistable<Long> implements Serializab
     lockFlag = aLockFlag;
   }
 
-  @Column(name = "event_id", precision = 10)
-  private int eventId;
-  @Column(name = "owner_type_id", precision = 10)
-  private int ownerTypeId;
+  @Column(name = "division_id", precision = 10)
+  private int divisionId;
+  @Column(name = "owner_resource_type_id", precision = 10)
+  private int ownerResourceTypeId;
   @Column(name = "owner_id", precision = 10)
   private int ownerId;
 
   /** Default constructor. */
-  public EventOwners() {
+  public DivisionOwners() {
     super();
   }
 
   /**
-   * Access method for eventId.
+   * Access method for divisionId.
    *
-   * @return the current value of eventId
+   * @return the current value of divisionId
    */
-  public int getEventId() {
-    return eventId;
+  public int getDivisionId() {
+    return divisionId;
   }
 
   /**
-   * Setter method for eventId.
+   * Setter method for divisionId.
    *
-   * @param aEventId the new value for eventId
+   * @param aDivisionId the new value for divisionId
    */
-  public void setEventId(int aEventId) {
-    eventId = aEventId;
+  public void setDivisionId(int aDivisionId) {
+    divisionId = aDivisionId;
   }
 
   /**
-   * Access method for ownerTypeId.
+   * Access method for ownerResourceTypeId.
    *
-   * @return the current value of ownerTypeId
+   * @return the current value of ownerResourceTypeId
    */
-  public int getOwnerTypeId() {
-    return ownerTypeId;
+  public int getOwnerResourceTypeId() {
+    return ownerResourceTypeId;
   }
 
   /**
-   * Setter method for ownerTypeId.
+   * Setter method for ownerResourceTypeId.
    *
-   * @param aOwnerTypeId the new value for ownerTypeId
+   * @param aOwnerResourceTypeId the new value for ownerResourceTypeId
    */
-  public void setOwnerTypeId(int aOwnerTypeId) {
-    ownerTypeId = aOwnerTypeId;
+  public void setOwnerResourceTypeId(int aOwnerResourceTypeId) {
+    ownerResourceTypeId = aOwnerResourceTypeId;
   }
 
   /**

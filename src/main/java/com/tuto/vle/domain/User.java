@@ -83,8 +83,6 @@ public class User implements Serializable {
     private String sourceOwnerId;
     @Column(name="source_description", length=255)
     private String sourceDescription;
-    @Column(name="role_id", precision=10)
-    private int roleId;
 
     /** Default constructor. */
     public User() {
@@ -395,24 +393,6 @@ public class User implements Serializable {
      */
     public void setSourceDescription(String aSourceDescription) {
         sourceDescription = aSourceDescription;
-    }
-
-    /**
-     * Access method for roleId.
-     *
-     * @return the current value of roleId
-     */
-    public int getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * Setter method for roleId.
-     *
-     * @param aRoleId the new value for roleId
-     */
-    public void setRoleId(int aRoleId) {
-        roleId = aRoleId;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.tuto.vle.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import com.tuto.vle.domain.Division;
 import com.tuto.vle.dto.DivisionDto;
@@ -11,6 +12,7 @@ import com.tuto.vle.repositories.DivisionRepository;
 import com.tuto.vle.util.Constants;
 
 @Service
+@ConditionalOnExpression("${my.service.enabled:false}")
 public class DivisionService {
 
   @Autowired

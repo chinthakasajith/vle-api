@@ -4,14 +4,21 @@ package com.tuto.vle.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Version;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity(name="user_resource_memberships")
-public class UserResourceMemberships extends AbstractPersistable<Long> implements Serializable {
+public class UserResourceMemberships implements Serializable {
+
+    /** Primary key. */
+    protected static final String PK = "userResourceMembershipsId";
 
     /**
      * The optimistic lock. Available via standard bean get/set operations.
@@ -38,10 +45,14 @@ public class UserResourceMemberships extends AbstractPersistable<Long> implement
         lockFlag = aLockFlag;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="user_resource_memberships_id", unique=true, nullable=false, precision=10)
+    private int userResourceMembershipsId;
     @Column(name="user_id", precision=10)
     private int userId;
-    @Column(name="membership_type_id", precision=10)
-    private int membershipTypeId;
+    @Column(name="resource_type_id", precision=10)
+    private int resourceTypeId;
     @Column(name="resource_id", precision=10)
     private int resourceId;
     @Column(name="created_dt")
@@ -54,10 +65,30 @@ public class UserResourceMemberships extends AbstractPersistable<Long> implement
     private Timestamp endDt;
     @Column(nullable=false, precision=10)
     private int status;
+    @Column(nullable=false, precision=19)
+    private long id;
 
     /** Default constructor. */
     public UserResourceMemberships() {
         super();
+    }
+
+    /**
+     * Access method for userResourceMembershipsId.
+     *
+     * @return the current value of userResourceMembershipsId
+     */
+    public int getUserResourceMembershipsId() {
+        return userResourceMembershipsId;
+    }
+
+    /**
+     * Setter method for userResourceMembershipsId.
+     *
+     * @param aUserResourceMembershipsId the new value for userResourceMembershipsId
+     */
+    public void setUserResourceMembershipsId(int aUserResourceMembershipsId) {
+        userResourceMembershipsId = aUserResourceMembershipsId;
     }
 
     /**
@@ -79,21 +110,21 @@ public class UserResourceMemberships extends AbstractPersistable<Long> implement
     }
 
     /**
-     * Access method for membershipTypeId.
+     * Access method for resourceTypeId.
      *
-     * @return the current value of membershipTypeId
+     * @return the current value of resourceTypeId
      */
-    public int getMembershipTypeId() {
-        return membershipTypeId;
+    public int getResourceTypeId() {
+        return resourceTypeId;
     }
 
     /**
-     * Setter method for membershipTypeId.
+     * Setter method for resourceTypeId.
      *
-     * @param aMembershipTypeId the new value for membershipTypeId
+     * @param aResourceTypeId the new value for resourceTypeId
      */
-    public void setMembershipTypeId(int aMembershipTypeId) {
-        membershipTypeId = aMembershipTypeId;
+    public void setResourceTypeId(int aResourceTypeId) {
+        resourceTypeId = aResourceTypeId;
     }
 
     /**
@@ -202,6 +233,94 @@ public class UserResourceMemberships extends AbstractPersistable<Long> implement
      */
     public void setStatus(int aStatus) {
         status = aStatus;
+    }
+
+    /**
+     * Access method for id.
+     *
+     * @return the current value of id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Setter method for id.
+     *
+     * @param aId the new value for id
+     */
+    public void setId(long aId) {
+        id = aId;
+    }
+
+    /**
+     * Compares the key for this instance with another UserResourceMemberships.
+     *
+     * @param other The object to compare to
+     * @return True if other object is instance of class UserResourceMemberships and the key objects are equal
+     */
+    private boolean equalKeys(Object other) {
+        if (this==other) {
+            return true;
+        }
+        if (!(other instanceof UserResourceMemberships)) {
+            return false;
+        }
+        UserResourceMemberships that = (UserResourceMemberships) other;
+        if (this.getUserResourceMembershipsId() != that.getUserResourceMembershipsId()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Compares this instance with another UserResourceMemberships.
+     *
+     * @param other The object to compare to
+     * @return True if the objects are the same
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof UserResourceMemberships)) return false;
+        return this.equalKeys(other) && ((UserResourceMemberships)other).equalKeys(this);
+    }
+
+    /**
+     * Returns a hash code for this instance.
+     *
+     * @return Hash code
+     */
+    @Override
+    public int hashCode() {
+        int i;
+        int result = 17;
+        i = getUserResourceMembershipsId();
+        result = 37*result + i;
+        return result;
+    }
+
+    /**
+     * Returns a debug-friendly String representation of this instance.
+     *
+     * @return String representation of this instance
+     */
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer("[UserResourceMemberships |");
+        sb.append(" userResourceMembershipsId=").append(getUserResourceMembershipsId());
+        sb.append("]");
+        return sb.toString();
+    }
+
+    /**
+     * Return all elements of the primary key.
+     *
+     * @return Map of key names to values
+     */
+    public Map<String, Object> getPrimaryKey() {
+        Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
+        ret.put("userResourceMembershipsId", Integer.valueOf(getUserResourceMembershipsId()));
+        return ret;
     }
 
 }

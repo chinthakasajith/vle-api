@@ -2,6 +2,7 @@ package com.tuto.vle.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.DivisionService;
 
 @RestController
+@ConditionalOnExpression("${my.controller.enabled:false}")
 public class DivisionController {
 
   // TODO Since authentication not implement yet
