@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Version;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-@Entity(name = "event_owners")
-public class EventOwners extends AbstractPersistable<Long> implements Serializable {
+@Entity(name = "news_owners")
+public class NewsOwners extends AbstractPersistable<Long> implements Serializable {
 
   /**
    * The optimistic lock. Available via standard bean get/set operations.
@@ -36,34 +36,34 @@ public class EventOwners extends AbstractPersistable<Long> implements Serializab
     lockFlag = aLockFlag;
   }
 
-  @Column(name = "event_id", precision = 10)
-  private int eventId;
+  @Column(name = "news_id", precision = 10)
+  private int newsId;
   @Column(name = "owner_type_id", precision = 10)
   private int ownerTypeId;
   @Column(name = "owner_id", precision = 10)
   private int ownerId;
 
   /** Default constructor. */
-  public EventOwners() {
+  public NewsOwners() {
     super();
   }
 
   /**
-   * Access method for eventId.
+   * Access method for newsId.
    *
-   * @return the current value of eventId
+   * @return the current value of newsId
    */
-  public int getEventId() {
-    return eventId;
+  public int getNewsId() {
+    return newsId;
   }
 
   /**
-   * Setter method for eventId.
+   * Setter method for newsId.
    *
-   * @param aEventId the new value for eventId
+   * @param aNewsId the new value for newsId
    */
-  public void setEventId(int aEventId) {
-    eventId = aEventId;
+  public void setNewsId(int aNewsId) {
+    newsId = aNewsId;
   }
 
   /**

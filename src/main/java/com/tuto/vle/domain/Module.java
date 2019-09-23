@@ -60,8 +60,6 @@ public class Module implements Serializable {
     private Timestamp createdDt;
     @Column(name="updated_dt")
     private Timestamp updatedDt;
-    @Column(name="course_id", precision=10)
-    private int courseId;
     @Column(name="public_module_id", unique=true, length=10)
     private String publicModuleId;
 
@@ -158,24 +156,6 @@ public class Module implements Serializable {
      */
     public void setUpdatedDt(Timestamp aUpdatedDt) {
         updatedDt = aUpdatedDt;
-    }
-
-    /**
-     * Access method for courseId.
-     *
-     * @return the current value of courseId
-     */
-    public int getCourseId() {
-        return courseId;
-    }
-
-    /**
-     * Setter method for courseId.
-     *
-     * @param aCourseId the new value for courseId
-     */
-    public void setCourseId(int aCourseId) {
-        courseId = aCourseId;
     }
 
     /**

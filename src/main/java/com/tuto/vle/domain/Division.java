@@ -62,8 +62,6 @@ public class Division implements Serializable {
     private Timestamp createdDt;
     @Column(name="updated_dt")
     private Timestamp updatedDt;
-    @Column(name="university_id", precision=10)
-    private int universityId;
 
     /** Default constructor. */
     public Division() {
@@ -176,24 +174,6 @@ public class Division implements Serializable {
      */
     public void setUpdatedDt(Timestamp aUpdatedDt) {
         updatedDt = aUpdatedDt;
-    }
-
-    /**
-     * Access method for universityId.
-     *
-     * @return the current value of universityId
-     */
-    public int getUniversityId() {
-        return universityId;
-    }
-
-    /**
-     * Setter method for universityId.
-     *
-     * @param aUniversityId the new value for universityId
-     */
-    public void setUniversityId(int aUniversityId) {
-        universityId = aUniversityId;
     }
 
     /**

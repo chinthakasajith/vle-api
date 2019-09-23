@@ -10,14 +10,15 @@ import com.tuto.vle.domain.University;
 @Repository
 public interface UniversityRepository extends JpaRepository<University, Long> {
 
-  @Query("SELECT u FROM com.tuto.vle.domain.UserResourceMemberships a join University u on a.resourceId=u.universityId WHERE a.userId = ?1 AND a.membershipTypeId = ?2")
+  @Query("SELECT u FROM com.tuto.vle.domain.UserResourceMemberships urm left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.userResourceMembershipsId = uums.userResourceMembershipsId left join University u on urm.resourceId=u.universityId WHERE uums.context = 'mobile' and urm.userId = ?1\n"
+      + "and uums.scope = 'read' and urm.resourceTypeId=?2")
   List<University> findByUserID(Integer userId, Integer membershipTypeId);
 
-  @Query("SELECT u FROM com.tuto.vle.domain.UserResourceMemberships a join University u on a.resourceId=u.universityId WHERE a.userId = ?1 AND a.membershipTypeId = ?2 AND u.universityId=?3")
+  @Query("SELECT u FROM com.tuto.vle.domain.UserResourceMemberships urm left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.userResourceMembershipsId = uums.userResourceMembershipsId left join University u on urm.resourceId=u.universityId WHERE uums.context = 'mobile' and urm.userId = ?1 and uums.scope = 'read' and urm.resourceTypeId=?2 and u.universityId=?3")
   List<University> findByUserIDANDUniversityId(Integer userId, Integer membershipTypeId,
       Integer universityId);
 
-  @Query("SELECT d FROM com.tuto.vle.domain.UserResourceMemberships a join University u on a.resourceId=u.universityId join Division d on d.universityId=u.universityId WHERE a.userId = ?1 AND a.membershipTypeId = ?2 AND u.universityId=?3")
+  @Query("SELECT d FROM com.tuto.vle.domain.UserResourceMemberships urm left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.userResourceMembershipsId = uums.userResourceMembershipsId left join com.tuto.vle.domain.DivisionOwners do on uums.resourceTypeId = do.ownerResourceTypeId left join com.tuto.vle.domain.Division d on do.divisionId = d.divisionId WHERE uums.context = 'mobile' and urm.userId = ?1 and uums.scope = 'public-read' and urm.resourceTypeId=?2 and urm.resourceId=?3 and do.ownerResourceTypeId >=4")
   List<Division> findDivisionsByUserIDANDUniversityId(Integer userId, Integer membershipTypeId,
       Integer universityId);
 
