@@ -68,6 +68,8 @@ public class Course implements Serializable {
     private Timestamp endDt;
     @Column(name="publish_dt")
     private Timestamp publishDt;
+    @Column(name="is_new", precision=10)
+    private int isNew;
 
     /** Default constructor. */
     public Course() {
@@ -234,6 +236,24 @@ public class Course implements Serializable {
      */
     public void setPublishDt(Timestamp aPublishDt) {
         publishDt = aPublishDt;
+    }
+
+    /**
+     * Access method for isNew.
+     *
+     * @return the current value of isNew
+     */
+    public int getIsNew() {
+        return isNew;
+    }
+
+    /**
+     * Setter method for isNew.
+     *
+     * @param aIsNew the new value for isNew
+     */
+    public void setIsNew(int aIsNew) {
+        isNew = aIsNew;
     }
 
     /**
