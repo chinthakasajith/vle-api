@@ -16,9 +16,20 @@ public class CourseService {
   @Autowired
   CourseRepository courseRepository;
 
-  public List<CourseDto> getCoursesByUserId(Integer userId) throws ResourceNotFoundException {
+  public List<CourseDto> getCoursesByUserId(Integer userId, String type, String filter)
+      throws ResourceNotFoundException {
 
-    List<Course> courses = courseRepository.findByUserID(userId, Constants.COURSE_RESOURCE_ID);
+    List<Course> courses = null;
+
+    if (type == null && filter == null) {
+      courses = courseRepository.findByUserID(userId, Constants.COURSE_RESOURCE_ID);
+    } else if (type.equals("recommend") && filter.equals("new")) {
+      courses = courseRepository.findNewByUserID(userId, Constants.COURSE_RESOURCE_ID);
+    } else if (type.equals("recommend") && filter.equals("interest")) {
+      courses = courseRepository.findInterestByUserID(userId, Constants.COURSE_RESOURCE_ID);
+    } else if (type.equals("recommend") && filter.equals("subscription")) {
+      courses = courseRepository.findSubscriptionByUserID(userId, Constants.COURSE_RESOURCE_ID);
+    }
 
     if (courses.isEmpty())
       throw new ResourceNotFoundException(

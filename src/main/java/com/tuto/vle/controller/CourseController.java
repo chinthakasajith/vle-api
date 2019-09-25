@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.CourseDto;
@@ -22,8 +23,9 @@ public class CourseController {
 
   @GetMapping("/courses")
   @ResponseStatus(HttpStatus.OK)
-  public List<CourseDto> getCoursesByUserId() throws ResourceNotFoundException {
-    return courseService.getCoursesByUserId(USER_ID);
+  public List<CourseDto> getCoursesByUserId(@RequestParam(required = false) String type,
+      @RequestParam(required = false) String filter) throws ResourceNotFoundException {
+    return courseService.getCoursesByUserId(USER_ID, type, filter);
   }
 
   @GetMapping("/courses/{id}")
