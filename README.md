@@ -1,4 +1,4 @@
-## Edit a file
+## Tuto API
 Tuto Virtual Learning Platform
 
 ## Developer Instructions
