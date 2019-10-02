@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.DivisionDto;
 import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.DivisionService;
+import io.swagger.annotations.Api;
 
 @RestController
 @ConditionalOnExpression("${my.controller.enabled:false}")
+@Api(value = "Division Controller", description = "Used for get division endpoints")
 public class DivisionController {
 
   // TODO Since authentication not implement yet
