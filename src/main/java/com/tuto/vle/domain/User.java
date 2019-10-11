@@ -87,6 +87,8 @@ public class User implements Serializable {
   private String sourceDescription;
   @Column(name = "social_type", length = 45)
   private String socialType;
+  @Column(name = "social_token", length = 500)
+  private String socialToken;
 
   /** Default constructor. */
   public User() {
@@ -415,6 +417,24 @@ public class User implements Serializable {
    */
   public void setSocialType(String aSocialType) {
     socialType = aSocialType;
+  }
+
+  /**
+   * Access method for socialToken.
+   *
+   * @return the current value of socialToken
+   */
+  public String getSocialToken() {
+    return socialToken;
+  }
+
+  /**
+   * Setter method for socialToken.
+   *
+   * @param aSocialToken the new value for socialToken
+   */
+  public void setSocialToken(String aSocialToken) {
+    socialToken = aSocialToken;
   }
 
   /**

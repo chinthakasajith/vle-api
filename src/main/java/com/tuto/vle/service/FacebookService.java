@@ -24,6 +24,8 @@ public class FacebookService {
     com.tuto.vle.domain.User userdto = new com.tuto.vle.domain.User();
     userdto.setEmail(user.getEmail());
     userdto.setFirstName(user.getFirstName());
+    userdto.setSocialToken(accessToken);
+
     return userdto;
   }
 }

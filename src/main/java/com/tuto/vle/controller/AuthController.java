@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.domain.User;
 import com.tuto.vle.dto.AuthProvider;
 import com.tuto.vle.dto.SignUpRequest;
+import com.tuto.vle.dto.WebServiceLoginRequest;
+import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
+import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.CustomAuthService;
 import com.tuto.vle.service.FacebookService;
 import com.tuto.vle.service.GoogleService;
@@ -20,9 +24,6 @@ import com.tuto.vle.service.UserService;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
-  // @Autowired
-  // private AuthenticationManager authenticationManager;
 
   @Autowired
   private UserService userService;
@@ -39,23 +40,18 @@ public class AuthController {
   @Autowired
   CustomAuthService customAuthService;
 
-  // @Autowired
-  // private TokenProvider tokenProvider;
+  @PostMapping("/login")
+  public WebServiceLoginResponse authenticateUser(
+      @RequestBody WebServiceLoginRequest webServiceLoginRequest) throws ResourceNotFoundException {
 
-  // @PostMapping("/login")
-  // public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-  //
-  // Authentication authentication =
-  // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-  // loginRequest.getEmail(), loginRequest.getPassword()));
-  //
-  // SecurityContextHolder.getContext().setAuthentication(authentication);
-  //
-  // String token = tokenProvider.createToken(authentication);
-  // return ResponseEntity.ok(new AuthResponse(token));
-  // }
+    if (!AuthProvider.custom.toString().equals(webServiceLoginRequest.getSocial_type()))
+      throw new ResourceNotFoundException("User is not registered for custom login !!!");
 
-  @PostMapping("/signup")
+    return userService.authenticateUser(webServiceLoginRequest.getUsername(),
+        webServiceLoginRequest.getPassword());
+  }
+
+  @PostMapping("/register")
   public WebServiceRegisterResponse registerUser(@RequestBody SignUpRequest signUpRequest)
       throws GeneralSecurityException, IOException {
 
@@ -74,6 +70,17 @@ public class AuthController {
     }
 
     return userService.persistUser(user);
+  }
+
+  @GetMapping("/token")
+  public WebServiceRegisterResponse getToken() throws ResourceNotFoundException {
+
+    User user = new User();
+    user.setLastName("miditha");
+    user.setEmail("miditha@tuto.com");
+    user.setPassword("abc@123");
+    user.setSocialType("custom");
+    return userService.getToken(user);
   }
 
 }
