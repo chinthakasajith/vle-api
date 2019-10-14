@@ -47,7 +47,7 @@ public class UserResourceMemberships implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="user_resource_memberships_id", unique=true, nullable=false, precision=10)
+    @Column(name="id", unique=true, nullable=false, precision=10)
     private int userResourceMembershipsId;
     @Column(name="user_id", precision=10)
     private int userId;
@@ -65,8 +65,8 @@ public class UserResourceMemberships implements Serializable {
     private Timestamp endDt;
     @Column(nullable=false, precision=10)
     private int status;
-    @Column(nullable=false, precision=19)
-    private long id;
+//    @Column(nullable=false, precision=19)
+//    private long id;
 
     /** Default constructor. */
     public UserResourceMemberships() {
@@ -235,23 +235,23 @@ public class UserResourceMemberships implements Serializable {
         status = aStatus;
     }
 
-    /**
-     * Access method for id.
-     *
-     * @return the current value of id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Setter method for id.
-     *
-     * @param aId the new value for id
-     */
-    public void setId(long aId) {
-        id = aId;
-    }
+//    /**
+//     * Access method for id.
+//     *
+//     * @return the current value of id
+//     */
+//    public long getId() {
+//        return id;
+//    }
+//
+//    /**
+//     * Setter method for id.
+//     *
+//     * @param aId the new value for id
+//     */
+//    public void setId(long aId) {
+//        id = aId;
+//    }
 
     /**
      * Compares the key for this instance with another UserResourceMemberships.
