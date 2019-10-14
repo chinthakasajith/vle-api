@@ -50,7 +50,7 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="course_id", unique=true, nullable=false, precision=10)
+    @Column(name="id", unique=true, nullable=false, precision=10)
     private int courseId;
     @Column(name="public_course_id", unique=true, length=10)
     private String publicCourseId;
