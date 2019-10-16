@@ -62,6 +62,10 @@ public class University implements Serializable {
     private Timestamp createdDt;
     @Column(name="updated_dt")
     private Timestamp updatedDt;
+    @Column(name="description", length=255)
+    private String universityDescription;
+    @Column(name="logo", length=255)
+    private String universityLogo;
 
     /** Default constructor. */
     public University() {
@@ -245,5 +249,21 @@ public class University implements Serializable {
         ret.put("universityId", Integer.valueOf(getUniversityId()));
         return ret;
     }
+
+	public String getUniversityDescription() {
+		return universityDescription;
+	}
+
+	public void setUniversityDescription(String universityDescription) {
+		this.universityDescription = universityDescription;
+	}
+
+	public String getUniversityLogo() {
+		return universityLogo;
+	}
+
+	public void setUniversityLogo(String universityLogo) {
+		this.universityLogo = universityLogo;
+	}    
 
 }

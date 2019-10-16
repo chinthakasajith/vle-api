@@ -43,7 +43,7 @@ public class UniversityController {
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get university details with university id", response = UniversityDto.class,
       responseContainer = "List")
-  public List<UniversityDto> getUniversityDetailsByUniversityId(@PathVariable("id") int id)
+  public UniversityDto getUniversityDetailsByUniversityId(@PathVariable("id") int id)
       throws ResourceNotFoundException {
     return universityService.getUniversityDetailsByUniversityId(USER_ID, id);
   }

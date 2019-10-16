@@ -70,6 +70,12 @@ public class Course implements Serializable {
     private Timestamp publishDt;
     @Column(name="is_new", precision=10)
     private int isNew;
+    @Column(name="price")
+    private java.math.BigDecimal price;
+    @Column(name="rating")
+    private java.math.BigDecimal rating;
+    @Column(name="banner", length=255)
+    private String courseBanner;
 
     /** Default constructor. */
     public Course() {
@@ -325,5 +331,29 @@ public class Course implements Serializable {
         ret.put("courseId", Integer.valueOf(getCourseId()));
         return ret;
     }
+
+	public java.math.BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(java.math.BigDecimal price) {
+		this.price = price;
+	}
+
+	public java.math.BigDecimal getRating() {
+		return rating;
+	}
+
+	public void setRating(java.math.BigDecimal rating) {
+		this.rating = rating;
+	}
+
+	public String getCourseBanner() {
+		return courseBanner;
+	}
+
+	public void setCourseBanner(String courseBanner) {
+		this.courseBanner = courseBanner;
+	}
 
 }

@@ -11,6 +11,8 @@ public class UniversityDto {
   public UniversityDto(University university) {
     this.id = university.getUniversityId();
     this.name = university.getUniversityName();
+    this.description = university.getUniversityDescription();
+    this.icon = university.getUniversityLogo();
   }
 
   public Integer getId() {

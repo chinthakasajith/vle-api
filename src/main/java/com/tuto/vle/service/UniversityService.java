@@ -1,11 +1,13 @@
 package com.tuto.vle.service;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tuto.vle.domain.Division;
 import com.tuto.vle.domain.University;
+import com.tuto.vle.dto.CourseDto;
 import com.tuto.vle.dto.DivisionDto;
 import com.tuto.vle.dto.UniversityDto;
 import com.tuto.vle.exception.ResourceNotFoundException;
@@ -32,7 +34,7 @@ public class UniversityService {
 
   }
 
-  public List<UniversityDto> getUniversityDetailsByUniversityId(Integer userId,
+  public UniversityDto getUniversityDetailsByUniversityId(Integer userId,
       Integer universityId) throws ResourceNotFoundException {
 
     List<University> universities = universityRepository.findByUserIDANDUniversityId(userId,
@@ -41,8 +43,8 @@ public class UniversityService {
     if (universities.isEmpty())
       throw new ResourceNotFoundException("No university registered to this user id : "
           + userId.toString() + " university id : " + universityId);
-
-    return universities.stream().map(UniversityDto::new).collect(Collectors.toList());
+    
+    return universities.stream().map(UniversityDto::new).collect(toSingleton());
   }
 
   public List<DivisionDto> getDivisionDetailsByUniversityId(Integer userId, Integer universityId)
@@ -57,6 +59,15 @@ public class UniversityService {
 
     return dividions.stream().map(DivisionDto::new).collect(Collectors.toList());
   }
+  
+  public static <T> Collector<T, ?, T> toSingleton() {
+		return Collectors.collectingAndThen(Collectors.toList(), list -> {
+			if (list.size() != 1) {
+				throw new IllegalStateException();
+			}
+			return list.get(0);
+		});
+	}
 
 }
 
