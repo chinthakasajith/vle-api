@@ -1,16 +1,17 @@
 package com.tuto.vle.dto;
 
-import com.tuto.vle.domain.University;
+import com.tuto.vle.domain.Module;
 
-public class UniversityDto {
+public class ModuleDto {
   private Integer id;
   private String name;
+  private String icon;
   private String description;
 
-  public UniversityDto(University university) {
-    this.id = university.getUniversityId();
-    this.name = university.getUniversityName();
-    this.description = university.getUniversityDescription();
+  public ModuleDto(Module module) {
+    this.id = module.getModuleId();
+    this.name = module.getModuleName();
+    this.description = module.getDescription();
   }
 
   public Integer getId() {
@@ -27,6 +28,14 @@ public class UniversityDto {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getIcon() {
+    return icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 
   public String getDescription() {
