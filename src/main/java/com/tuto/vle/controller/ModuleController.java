@@ -8,53 +8,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.DivisionDto;
+import com.tuto.vle.dto.ModuleDto;
 import com.tuto.vle.dto.UniversityDto;
 import com.tuto.vle.exception.ResourceNotFoundException;
-import com.tuto.vle.service.UniversityService;
+import com.tuto.vle.service.ModuleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "University Controller", description = "Used for get university endpoints")
-public class UniversityController {
+@Api(value = "Module Controller", description = "Used for get module endpoints")
+public class ModuleController {
 
   // TODO Since authentication not implement yet
   final static Integer USER_ID = 1;
 
   @Autowired
-  private UniversityService universityService;
+  private ModuleService moduleService;
 
-  @ApiOperation(value = "View a list of available Universities", response = UniversityDto.class,
+  @ApiOperation(value = "View a list of available Modules", response = UniversityDto.class,
       responseContainer = "List")
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved list"),
       @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
       @ApiResponse(code = 403,
           message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-  @GetMapping("/universities")
+  @GetMapping("/modules")
   @ResponseStatus(HttpStatus.OK)
-  public List<UniversityDto> getAllUniversities() throws ResourceNotFoundException {
-    return universityService.getModulesByUserId(USER_ID);
+  public List<ModuleDto> getAllModules() throws ResourceNotFoundException {
+    return moduleService.getModulesByUserId(USER_ID);
   }
 
-  @GetMapping("/universities/{id}")
+  @GetMapping("/modules/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(value = "Get university details with university id", response = UniversityDto.class,
+  @ApiOperation(value = "Get module details with module id", response = UniversityDto.class,
       responseContainer = "List")
-  public UniversityDto getUniversityDetailsByUniversityId(@PathVariable("id") int id)
+  public ModuleDto getModuleDetailsByModuleId(@PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return universityService.getUniversityDetailsByUniversityId(USER_ID, id);
+    return moduleService.getModuleDetailsByModuleId(USER_ID, id);
   }
 
-  @GetMapping("/universities/{id}/divisions")
+  @GetMapping("/modules/courses/{id}")
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get division details with university id", response = DivisionDto.class,
       responseContainer = "List")
-  public List<DivisionDto> getDivisionDetailsByUniversityId(@PathVariable("id") int id)
+  public List<ModuleDto> getModuleDetailsByCourseId(@PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return universityService.getDivisionDetailsByUniversityId(USER_ID, id);
+    return moduleService.getModuleDetailsByCourseId(USER_ID, id);
   }
 
 }
