@@ -8,5 +8,6 @@ public final class Constants {
 
   public static final Integer MODULE_RESOURCE_ID = 1;
 
+  public static final Integer LESSON_RESOURCE_ID = 2;
 
 }
