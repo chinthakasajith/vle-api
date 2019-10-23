@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.LatestLessonDTO;
@@ -20,9 +21,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Lesson Controller", description = "Used for get lesson endpoints")
 public class LessonController {
 
-  // TODO Since authentication not implement yet
-  final static Integer USER_ID = 1;
-
   @Autowired
   private LessonService lessonService;
 
@@ -35,26 +33,29 @@ public class LessonController {
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
   @GetMapping("/lessons")
   @ResponseStatus(HttpStatus.OK)
-  public List<LatestLessonDTO> getAllModules() throws ResourceNotFoundException {
-    return lessonService.getLessonsByUserId(USER_ID);
+  public List<LatestLessonDTO> getAllModules(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId) throws ResourceNotFoundException {
+    return lessonService.getLessonsByUserId(mobileUserId);
   }
 
   @GetMapping("/lesson/{id}")
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get lesson details with lesson id", response = LessonDto.class,
       responseContainer = "List")
-  public LessonDto getModuleDetailsByModuleId(@PathVariable("id") int id)
+  public LessonDto getModuleDetailsByModuleId(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return lessonService.getLessonDetailsByLessonId(USER_ID, id);
+    return lessonService.getLessonDetailsByLessonId(mobileUserId, id);
   }
 
   @GetMapping("/lesson/modules/{id}")
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get lesson details with module id", response = LessonDto.class,
       responseContainer = "List")
-  public List<LessonDto> getLessonDetailsByModuleId(@PathVariable("id") int id)
+  public List<LessonDto> getLessonDetailsByModuleId(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return lessonService.getLessonDetailsByModuleId(USER_ID, id);
+    return lessonService.getLessonDetailsByModuleId(mobileUserId, id);
   }
 
 }

@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tuto.vle.domain.Token;
+import com.tuto.vle.domain.TokenValidity;
 import com.tuto.vle.repositories.TokenRepository;
 
 @Service
@@ -42,5 +43,9 @@ public class TokenService {
     timestamp = new Timestamp(cal.getTime().getTime());
     return timestamp;
 
+  }
+
+  public TokenValidity isTokenExpired(String hashToken) {
+    return tokenRepository.isTokenExpired(hashToken, generatePeriod(0));
   }
 }
