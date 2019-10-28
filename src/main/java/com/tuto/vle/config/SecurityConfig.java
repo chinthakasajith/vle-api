@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import com.tuto.vle.filter.AddResponseHeaderFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests().antMatchers("/auth/**").permitAll().and().httpBasic()
-        .and().authorizeRequests().anyRequest().authenticated();
+        .and().authorizeRequests().anyRequest().authenticated().and()
+        .addFilterBefore(new AddResponseHeaderFilter(), BasicAuthenticationFilter.class);
   }
 
   @Autowired

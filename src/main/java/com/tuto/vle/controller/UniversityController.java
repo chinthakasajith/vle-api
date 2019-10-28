@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.DivisionDto;
@@ -20,9 +21,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "University Controller", description = "Used for get university endpoints")
 public class UniversityController {
 
-  // TODO Since authentication not implement yet
-  final static Integer USER_ID = 1;
-
   @Autowired
   private UniversityService universityService;
 
@@ -35,26 +33,29 @@ public class UniversityController {
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
   @GetMapping("/universities")
   @ResponseStatus(HttpStatus.OK)
-  public List<UniversityDto> getAllUniversities() throws ResourceNotFoundException {
-    return universityService.getModulesByUserId(USER_ID);
+  public List<UniversityDto> getAllUniversities(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId) throws ResourceNotFoundException {
+    return universityService.getModulesByUserId(mobileUserId);
   }
 
   @GetMapping("/universities/{id}")
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get university details with university id", response = UniversityDto.class,
       responseContainer = "List")
-  public UniversityDto getUniversityDetailsByUniversityId(@PathVariable("id") int id)
+  public UniversityDto getUniversityDetailsByUniversityId(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return universityService.getUniversityDetailsByUniversityId(USER_ID, id);
+    return universityService.getUniversityDetailsByUniversityId(mobileUserId, id);
   }
 
   @GetMapping("/universities/{id}/divisions")
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get division details with university id", response = DivisionDto.class,
       responseContainer = "List")
-  public List<DivisionDto> getDivisionDetailsByUniversityId(@PathVariable("id") int id)
+  public List<DivisionDto> getDivisionDetailsByUniversityId(
+      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
       throws ResourceNotFoundException {
-    return universityService.getDivisionDetailsByUniversityId(USER_ID, id);
+    return universityService.getDivisionDetailsByUniversityId(mobileUserId, id);
   }
 
 }
