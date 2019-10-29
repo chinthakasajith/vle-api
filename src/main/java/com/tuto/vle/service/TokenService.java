@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.tuto.vle.domain.Token;
 import com.tuto.vle.domain.TokenValidity;
@@ -16,17 +17,25 @@ public class TokenService {
   @Autowired
   TokenRepository tokenRepository;
 
-  public Token generateToken() {
+  @Value("${token.valitidy.period}")
+  private Integer tokenValidityPeriod;
+
+  public Token generateToken(Integer tokenId) {
 
     String tokenHash = null;
     Token token = null;
     long now = System.currentTimeMillis();
 
     token = new Token();
+
+    if (tokenId != null) {
+      token = tokenRepository.findById(tokenId).get();
+    }
+
     tokenHash = UUID.randomUUID().toString();
     token.setTokenHash(tokenHash);
     token.setCreateDt(generatePeriod(0));
-    token.setExpireDt(generatePeriod(30));
+    token.setExpireDt(generatePeriod(tokenValidityPeriod));
     token.setType(1);
     token.setStatus(1);
 

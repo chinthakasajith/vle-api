@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,14 +74,17 @@ public class AuthController {
   }
 
   @GetMapping("/token")
-  public WebServiceRegisterResponse getToken() throws ResourceNotFoundException {
+  public WebServiceRegisterResponse getToken(
+      @RequestAttribute("bearer-access-token") String accessToken,
+      @RequestAttribute("mobile-user-id") Integer mobileUserId,
+      @RequestAttribute("token-id") Integer tokenId) throws ResourceNotFoundException {
 
     User user = new User();
     user.setLastName("miditha");
     user.setEmail("miditha@tuto.com");
     user.setPassword("abc@123");
     user.setSocialType("custom");
-    return userService.getToken(user);
+    return userService.getToken(mobileUserId, accessToken, tokenId);
   }
 
 }

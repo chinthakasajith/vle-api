@@ -39,7 +39,7 @@ public class UserService {
     user.setIsActive(true);
     User result = userRepository.save(user);
 
-    Token token = tokenService.generateToken();
+    Token token = tokenService.generateToken(null);
 
     UserTokens userTokens = new UserTokens();
     userTokens.setTokenId(token.getTokenId());
@@ -81,24 +81,13 @@ public class UserService {
 
   }
 
-  public WebServiceRegisterResponse getToken(User user) {
+  public WebServiceRegisterResponse getToken(Integer mobileUserId, String accessToken,
+      Integer tokenId) {
 
-    Timestamp current = new Timestamp(System.currentTimeMillis());
-    user.setCreatedAt(current);
-    user.setUpdatedAt(current);
-    user.setLastLogin(current);
-    user.setIsActive(true);
-
-    Token token = tokenService.generateToken();
-
-    UserTokens userTokens = new UserTokens();
-    userTokens.setTokenId(token.getTokenId());
-    userTokens.setUserId(user.getUserId());
-    UserTokens activeUserToken = userTokensRepository.save(userTokens);
+    Token token = tokenService.generateToken(tokenId);
 
     WebServiceRegisterResponse webServiceRegisterResponse = new WebServiceRegisterResponse();
-    webServiceRegisterResponse.setUserId(user.getUserId());
-    webServiceRegisterResponse.setName(user.getLastName());
+    webServiceRegisterResponse.setUserId(mobileUserId);
     webServiceRegisterResponse.setAccess_token(token.getTokenHash());
 
     return webServiceRegisterResponse;
