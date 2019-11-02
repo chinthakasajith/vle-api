@@ -10,8 +10,8 @@ import com.tuto.vle.domain.User;
 import com.tuto.vle.domain.UserTokens;
 import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
-import com.tuto.vle.exception.BadRequestException;
 import com.tuto.vle.exception.ResourceNotFoundException;
+import com.tuto.vle.exception.UserExistsException;
 import com.tuto.vle.repositories.UserRepository;
 import com.tuto.vle.repositories.UserTokensRepository;
 
@@ -56,7 +56,7 @@ public class UserService {
 
   public void isExistUser(String signUpRequest) {
     if (userRepository.existsByEmail(signUpRequest)) {
-      throw new BadRequestException("Email already in use.");
+      throw new UserExistsException("User already exists");
     }
   }
 

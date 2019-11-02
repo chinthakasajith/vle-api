@@ -54,7 +54,7 @@ public class AuthController {
 
   @PostMapping("/register")
   public WebServiceRegisterResponse registerUser(@RequestBody SignUpRequest signUpRequest)
-      throws GeneralSecurityException, IOException {
+      throws GeneralSecurityException, IOException, Exception {
 
     userService.isExistUser(signUpRequest.getEmail());
 
