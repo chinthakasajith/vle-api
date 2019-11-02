@@ -44,7 +44,7 @@ public class AddResponseHeaderFilter implements Filter {
       if (tokenValidity == null) {
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+        httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
             "Bearer access token replaced or expired.");
         return;
 
