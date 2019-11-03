@@ -7,4 +7,6 @@ import com.tuto.vle.domain.UserTokens;
 @Repository
 public interface UserTokensRepository extends JpaRepository<UserTokens, Long> {
 
+  UserTokens findById(Integer id);
+
 }

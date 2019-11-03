@@ -15,6 +15,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.tuto.vle.domain.User;
 import com.tuto.vle.dto.AuthProvider;
+import com.tuto.vle.exception.UserRegisterException;
 
 @Service
 public class GoogleService {
@@ -55,7 +56,8 @@ public class GoogleService {
 
   }
 
-  public User getVerifiedUser(String idTokenString) throws GeneralSecurityException, IOException {
+  public User getVerifiedUser(String idTokenString)
+      throws GeneralSecurityException, IOException, Exception {
     GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),
         JacksonFactory.getDefaultInstance())
             // Specify the CLIENT_ID of the app that accesses the backend:
@@ -91,7 +93,7 @@ public class GoogleService {
       user.setSocialToken(idTokenString);
 
     } else {
-      System.out.println("Invalid ID token.");
+      throw new UserRegisterException("Could not register user");
     }
     return user;
   }

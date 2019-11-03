@@ -41,8 +41,18 @@ public class AddResponseHeaderFilter implements Filter {
 
     if (hashToken.isPresent()) {
       TokenValidity tokenValidity = tokenService.isTokenExpired(hashToken.get());
-      // httpServletResponse.addIntHeader("mobile-user-id", tokenValidity.getUserId());
-      httpRequest.setAttribute("mobile-user-id", tokenValidity.getUserId());
+      if (tokenValidity == null) {
+
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+            "Bearer access token replaced or expired.");
+        return;
+
+      } else {
+        httpRequest.setAttribute("mobile-user-id", tokenValidity.getUserId());
+        httpRequest.setAttribute("bearer-access-token", hashToken.get());
+        httpRequest.setAttribute("token-id", tokenValidity.getTokenId());
+      }
     }
 
     chain.doFilter(request, response);

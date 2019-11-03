@@ -10,8 +10,8 @@ import com.tuto.vle.domain.User;
 import com.tuto.vle.domain.UserTokens;
 import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
-import com.tuto.vle.exception.BadRequestException;
 import com.tuto.vle.exception.ResourceNotFoundException;
+import com.tuto.vle.exception.UserExistsException;
 import com.tuto.vle.repositories.UserRepository;
 import com.tuto.vle.repositories.UserTokensRepository;
 
@@ -39,7 +39,7 @@ public class UserService {
     user.setIsActive(true);
     User result = userRepository.save(user);
 
-    Token token = tokenService.generateToken();
+    Token token = tokenService.generateToken(null);
 
     UserTokens userTokens = new UserTokens();
     userTokens.setTokenId(token.getTokenId());
@@ -56,7 +56,7 @@ public class UserService {
 
   public void isExistUser(String signUpRequest) {
     if (userRepository.existsByEmail(signUpRequest)) {
-      throw new BadRequestException("Email already in use.");
+      throw new UserExistsException("User already exists");
     }
   }
 
@@ -81,24 +81,13 @@ public class UserService {
 
   }
 
-  public WebServiceRegisterResponse getToken(User user) {
+  public WebServiceRegisterResponse getToken(Integer mobileUserId, String accessToken,
+      Integer tokenId) {
 
-    Timestamp current = new Timestamp(System.currentTimeMillis());
-    user.setCreatedAt(current);
-    user.setUpdatedAt(current);
-    user.setLastLogin(current);
-    user.setIsActive(true);
-
-    Token token = tokenService.generateToken();
-
-    UserTokens userTokens = new UserTokens();
-    userTokens.setTokenId(token.getTokenId());
-    userTokens.setUserId(user.getUserId());
-    UserTokens activeUserToken = userTokensRepository.save(userTokens);
+    Token token = tokenService.generateToken(tokenId);
 
     WebServiceRegisterResponse webServiceRegisterResponse = new WebServiceRegisterResponse();
-    webServiceRegisterResponse.setUserId(user.getUserId());
-    webServiceRegisterResponse.setName(user.getLastName());
+    webServiceRegisterResponse.setUserId(mobileUserId);
     webServiceRegisterResponse.setAccess_token(token.getTokenHash());
 
     return webServiceRegisterResponse;
