@@ -47,8 +47,7 @@ public class ModuleController {
 
   @GetMapping("/modules/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(value = "Get module details with module id", response = ModuleDto.class,
-      responseContainer = "List")
+  @ApiOperation(value = "Get module details with module id", response = ModuleDto.class)
   @ApiImplicitParams({
       @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
       @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",

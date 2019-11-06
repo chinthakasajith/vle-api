@@ -48,8 +48,7 @@ public class LessonController {
 
   @GetMapping("/lesson/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(value = "Get lesson details with lesson id", response = LessonDto.class,
-      responseContainer = "List")
+  @ApiOperation(value = "Get lesson details with lesson id", response = LessonDto.class)
   @ApiImplicitParams({
       @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
       @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",

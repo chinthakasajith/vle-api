@@ -48,8 +48,7 @@ public class UniversityController {
 
   @GetMapping("/universities/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(value = "Get university details with university id", response = UniversityDto.class,
-      responseContainer = "List")
+  @ApiOperation(value = "Get university details with university id", response = UniversityDto.class)
   @ApiImplicitParams({
       @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
       @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",

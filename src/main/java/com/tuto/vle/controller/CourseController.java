@@ -50,8 +50,7 @@ public class CourseController {
     return courseService.getCoursesByUserId(mobileUserId, type, filter);
   }
 
-  @ApiOperation(value = "Get course with course id", response = CourseDto.class,
-      responseContainer = "List")
+  @ApiOperation(value = "Get course with course id", response = CourseDto.class)
   @ApiImplicitParams({
       @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
       @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",
