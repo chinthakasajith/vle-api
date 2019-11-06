@@ -21,9 +21,15 @@ import com.tuto.vle.service.CustomAuthService;
 import com.tuto.vle.service.FacebookService;
 import com.tuto.vle.service.GoogleService;
 import com.tuto.vle.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/auth")
+@Api(value = "Auth Controller", description = "Used for user authentication")
 public class AuthController {
 
   @Autowired
@@ -42,6 +48,7 @@ public class AuthController {
   CustomAuthService customAuthService;
 
   @PostMapping("/login")
+  @ApiOperation(value = "Login endpoint", response = WebServiceLoginResponse.class)
   public WebServiceLoginResponse authenticateUser(
       @RequestBody WebServiceLoginRequest webServiceLoginRequest) throws ResourceNotFoundException {
 
@@ -53,6 +60,7 @@ public class AuthController {
   }
 
   @PostMapping("/register")
+  @ApiOperation(value = "Register endpoint", response = WebServiceRegisterResponse.class)
   public WebServiceRegisterResponse registerUser(@RequestBody SignUpRequest signUpRequest)
       throws GeneralSecurityException, IOException, Exception {
 
@@ -74,16 +82,15 @@ public class AuthController {
   }
 
   @GetMapping("/token")
+  @ApiOperation(value = "Token endpoint", response = WebServiceRegisterResponse.class)
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
+      @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",
+          paramType = "header")})
   public WebServiceRegisterResponse getToken(
-      @RequestAttribute("bearer-access-token") String accessToken,
-      @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @RequestAttribute("token-id") Integer tokenId) throws ResourceNotFoundException {
-
-    User user = new User();
-    user.setLastName("miditha");
-    user.setEmail("miditha@tuto.com");
-    user.setPassword("abc@123");
-    user.setSocialType("custom");
+      @ApiIgnore @RequestAttribute("bearer-access-token") String accessToken,
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
+      @ApiIgnore @RequestAttribute("token-id") Integer tokenId) throws ResourceNotFoundException {
     return userService.getToken(mobileUserId, accessToken, tokenId);
   }
 

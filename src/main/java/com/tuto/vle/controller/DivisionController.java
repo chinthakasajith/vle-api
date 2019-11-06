@@ -13,8 +13,10 @@ import com.tuto.vle.dto.DivisionDto;
 import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.DivisionService;
 import io.swagger.annotations.Api;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
+@ApiIgnore
 @ConditionalOnExpression("${my.controller.enabled:false}")
 @Api(value = "Division Controller", description = "Used for get division endpoints")
 public class DivisionController {

@@ -3,8 +3,10 @@ package com.tuto.vle.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.repositories.UserRepository;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
+@ApiIgnore
 public class UserController {
 
   @Autowired

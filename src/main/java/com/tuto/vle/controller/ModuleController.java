@@ -12,9 +12,12 @@ import com.tuto.vle.dto.ModuleDto;
 import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.ModuleService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @Api(value = "Module Controller", description = "Used for get module endpoints")
@@ -25,6 +28,10 @@ public class ModuleController {
 
   @ApiOperation(value = "View a list of available Modules", response = ModuleDto.class,
       responseContainer = "List")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
+      @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",
+          paramType = "header")})
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved list"),
       @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
       @ApiResponse(code = 403,
@@ -32,7 +39,8 @@ public class ModuleController {
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
   @GetMapping("/modules")
   @ResponseStatus(HttpStatus.OK)
-  public List<ModuleDto> getAllModules(@RequestAttribute("mobile-user-id") Integer mobileUserId)
+  public List<ModuleDto> getAllModules(
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId)
       throws ResourceNotFoundException {
     return moduleService.getModulesByUserId(mobileUserId);
   }
@@ -41,9 +49,13 @@ public class ModuleController {
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get module details with module id", response = ModuleDto.class,
       responseContainer = "List")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
+      @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",
+          paramType = "header")})
   public ModuleDto getModuleDetailsByModuleId(
-      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
-      throws ResourceNotFoundException {
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
+      @PathVariable("id") int id) throws ResourceNotFoundException {
     return moduleService.getModuleDetailsByModuleId(mobileUserId, id);
   }
 
@@ -51,9 +63,13 @@ public class ModuleController {
   @ResponseStatus(HttpStatus.OK)
   @ApiOperation(value = "Get division details with university id", response = ModuleDto.class,
       responseContainer = "List")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "Content-Type", value = "application/json", paramType = "header"),
+      @ApiImplicitParam(name = "bearer-access-token", value = "Generated access token",
+          paramType = "header")})
   public List<ModuleDto> getModuleDetailsByCourseId(
-      @RequestAttribute("mobile-user-id") Integer mobileUserId, @PathVariable("id") int id)
-      throws ResourceNotFoundException {
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
+      @PathVariable("id") int id) throws ResourceNotFoundException {
     return moduleService.getModuleDetailsByCourseId(mobileUserId, id);
   }
 
