@@ -21,8 +21,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
       + "                                      on urm.id = uums.user_resource_memberships_id\n"
       + "                   where lo.owner_resource_type_id = 2\n"
       + "                     and urm.user_id = ?1 \n"
-      + "                     and urm.resource_type_id = ?2\n"
-      + "                     and uums.resource_type_id = 1\n"
+      + "                     and urm.resource_type_id = 2\n"
+      + "                     and uums.resource_type_id = ?2\n"
       + "                     and uums.context = 'mobile'\n"
       + "                     and uums.scope = 'read'\n"
       + "                   group by lo.owner_id\n"
@@ -30,8 +30,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
       nativeQuery = true)
   List<LatestLessonDTO> findByUserID(Integer userId, Integer membershipTypeId);
 
-  @Query("select l from com.tuto.vle.domain.LessonOwners lo left join Lesson l on lo.lessonId=l.id left join com.tuto.vle.domain.UserResourceMemberships urm on urm.resourceId=lo.ownerId left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.id = uums.userResourceMembershipsId where lo.ownerResourceTypeId=2 and urm.userId = ?1 and l.id=?3 and urm.resourceTypeId = ?2 and uums.resourceTypeId = 1 and uums.context = 'mobile' and uums.scope = 'read'")
-  Lesson findByUserIDANDLessonId(Integer userId, Integer membershipTypeId, Integer lessonId);
+  @Query("select l from com.tuto.vle.domain.LessonOwners lo left join Lesson l on lo.lessonId=l.id left join com.tuto.vle.domain.UserResourceMemberships urm on urm.resourceId=lo.ownerId left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.id = uums.userResourceMembershipsId where lo.ownerResourceTypeId=2 and urm.userId = ?1 and l.id=?2 and urm.resourceTypeId = 2 and uums.resourceTypeId = 1 and uums.context = 'mobile' and uums.scope = 'read'")
+  Lesson findByUserIDANDLessonId(Integer userId, Integer lessonId);
 
   @Query("select l from com.tuto.vle.domain.LessonOwners lo left join Lesson l on lo.lessonId=l.id left join com.tuto.vle.domain.UserResourceMemberships urm on urm.resourceId=lo.ownerId left join com.tuto.vle.domain.UserUniversityMembershipsScopes uums on urm.id = uums.userResourceMembershipsId where lo.ownerResourceTypeId=2 and urm.userId = ?1 and lo.ownerId=?2 and urm.resourceTypeId = 2 and uums.resourceTypeId = 1 and uums.context = 'mobile' and uums.scope = 'read'")
   List<Lesson> findLessonsByUserIDANDModuleId(Integer userId, Integer moduleId);

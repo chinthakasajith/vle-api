@@ -33,8 +33,7 @@ public class LessonService {
   public LessonDto getLessonDetailsByLessonId(Integer userId, Integer lessonId)
       throws ResourceNotFoundException {
 
-    Lesson lesson =
-        lessonRepository.findByUserIDANDLessonId(userId, Constants.LESSON_RESOURCE_ID, lessonId);
+    Lesson lesson = lessonRepository.findByUserIDANDLessonId(userId, lessonId);
 
     if (lesson == null)
       throw new ResourceNotFoundException("No lesson registered to this user id : "
