@@ -10,7 +10,8 @@ import com.tuto.vle.domain.User;
 import com.tuto.vle.domain.UserTokens;
 import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
-import com.tuto.vle.exception.ResourceNotFoundException;
+import com.tuto.vle.exception.InvalidEmailException;
+import com.tuto.vle.exception.InvalidPasswordException;
 import com.tuto.vle.exception.UserExistsException;
 import com.tuto.vle.repositories.UserRepository;
 import com.tuto.vle.repositories.UserTokensRepository;
@@ -61,12 +62,12 @@ public class UserService {
   }
 
   public WebServiceLoginResponse authenticateUser(String email, String password)
-      throws ResourceNotFoundException {
+      throws RuntimeException {
 
     Login user = userRepository.authenticateUser(email);
 
     if (user == null)
-      throw new ResourceNotFoundException("No user registered to this user id : " + email);
+      throw new InvalidEmailException("No user registered to this user id : " + email);
 
     if (passwordEncoder.matches(password, user.getPassword())) {
       WebServiceLoginResponse webServiceLoginResponse = new WebServiceLoginResponse();
@@ -75,9 +76,9 @@ public class UserService {
       webServiceLoginResponse.setSocialType(user.getSocial_type());
       webServiceLoginResponse.setAccess_token(user.getToken_hash());
       return webServiceLoginResponse;
+    } else {
+      throw new InvalidPasswordException("Invalid Password.");
     }
-
-    return new WebServiceLoginResponse();
 
   }
 

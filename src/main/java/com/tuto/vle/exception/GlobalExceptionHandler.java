@@ -36,5 +36,17 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(InvalidPasswordException.class)
+  public ResponseEntity<?> invalidPasswordExceptionHandler(Exception ex, WebRequest request) {
+    AuthErrorDto authErrorDto = new AuthErrorDto(1002, "Invalid password");
+    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(InvalidEmailException.class)
+  public ResponseEntity<?> invalidEmailExceptionHandler(Exception ex, WebRequest request) {
+    AuthErrorDto authErrorDto = new AuthErrorDto(1003, "Invalid email address");
+    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
+  }
+
 }
 
