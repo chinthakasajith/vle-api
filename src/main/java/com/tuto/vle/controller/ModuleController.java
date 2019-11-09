@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.ModuleDto;
-import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.ModuleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,8 +39,7 @@ public class ModuleController {
   @GetMapping("/modules")
   @ResponseStatus(HttpStatus.OK)
   public List<ModuleDto> getAllModules(
-      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId)
-      throws ResourceNotFoundException {
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId) throws Exception {
     return moduleService.getModulesByUserId(mobileUserId);
   }
 
@@ -54,7 +52,7 @@ public class ModuleController {
           paramType = "header")})
   public ModuleDto getModuleDetailsByModuleId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return moduleService.getModuleDetailsByModuleId(mobileUserId, id);
   }
 
@@ -68,7 +66,7 @@ public class ModuleController {
           paramType = "header")})
   public List<ModuleDto> getModuleDetailsByCourseId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return moduleService.getModuleDetailsByCourseId(mobileUserId, id);
   }
 

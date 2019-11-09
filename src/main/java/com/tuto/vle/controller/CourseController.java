@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.CourseDto;
-import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,7 +45,7 @@ public class CourseController {
       @ApiParam(value = "recommend", required = false) @RequestParam(required = false) String type,
       @ApiParam(value = "new/interest/subscription",
           required = false) @RequestParam(required = false) String filter)
-      throws ResourceNotFoundException {
+      throws Exception {
     return courseService.getCoursesByUserId(mobileUserId, type, filter);
   }
 
@@ -59,7 +58,7 @@ public class CourseController {
   @ResponseStatus(HttpStatus.OK)
   public CourseDto getCourseDetailsByUniversityId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return courseService.getCourseDetailsByCourseId(mobileUserId, id);
   }
 

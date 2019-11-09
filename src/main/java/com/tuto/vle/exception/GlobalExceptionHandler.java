@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import com.tuto.vle.dto.AuthErrorDto;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,29 +24,12 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @ExceptionHandler(UserExistsException.class)
-  public ResponseEntity<?> userExistsExceptionHandler(Exception ex, WebRequest request) {
-
-    AuthErrorDto authErrorDto = new AuthErrorDto(1001, "User already exists");
-    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(UserRegisterException.class)
-  public ResponseEntity<?> userRegisterExceptionHandler(Exception ex, WebRequest request) {
-    AuthErrorDto authErrorDto = new AuthErrorDto(1000, "Could not register user");
-    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(InvalidPasswordException.class)
-  public ResponseEntity<?> invalidPasswordExceptionHandler(Exception ex, WebRequest request) {
-    AuthErrorDto authErrorDto = new AuthErrorDto(1002, "Invalid password");
-    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(InvalidEmailException.class)
-  public ResponseEntity<?> invalidEmailExceptionHandler(Exception ex, WebRequest request) {
-    AuthErrorDto authErrorDto = new AuthErrorDto(1003, "Invalid email address");
-    return new ResponseEntity<>(authErrorDto, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(CustomException.class)
+  public ResponseEntity<?> customExceptionHandler(CustomException customException) {
+    CustomErrorCodes customErrorCodes = customException.getCustomErrorCodes();
+    AuthErrorDto authErrorDto =
+        new AuthErrorDto(customErrorCodes.getId(), customErrorCodes.getMsg());
+    return new ResponseEntity<>(authErrorDto, customErrorCodes.getHttpCode());
   }
 
 }

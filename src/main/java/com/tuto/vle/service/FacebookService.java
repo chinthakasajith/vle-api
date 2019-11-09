@@ -6,7 +6,8 @@ import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.User;
-import com.tuto.vle.exception.UserRegisterException;
+import com.tuto.vle.exception.CustomException;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
 public class FacebookService {
@@ -20,7 +21,7 @@ public class FacebookService {
       user = facebookClient.fetchObject("me", User.class,
           Parameter.with("fields", "birthday,email,cover,name,gender,locale,location,hometown"));
     } catch (Exception e) {
-      throw new UserRegisterException("Could not register user");
+      throw new CustomException(CustomErrorCodes.FAIL_USER_REGISTRATION);
     }
     com.tuto.vle.domain.User userdto = new com.tuto.vle.domain.User();
     userdto.setEmail(user.getEmail());

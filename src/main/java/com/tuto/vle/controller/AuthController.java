@@ -50,7 +50,7 @@ public class AuthController {
   @PostMapping("/login")
   @ApiOperation(value = "Login endpoint", response = WebServiceLoginResponse.class)
   public WebServiceLoginResponse authenticateUser(
-      @RequestBody WebServiceLoginRequest webServiceLoginRequest) throws ResourceNotFoundException {
+      @RequestBody WebServiceLoginRequest webServiceLoginRequest) throws Exception {
 
     if (!AuthProvider.custom.toString().equals(webServiceLoginRequest.getSocial_type()))
       throw new ResourceNotFoundException("User is not registered for custom login !!!");

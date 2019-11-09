@@ -9,9 +9,11 @@ import com.tuto.vle.domain.Division;
 import com.tuto.vle.domain.University;
 import com.tuto.vle.dto.DivisionDto;
 import com.tuto.vle.dto.UniversityDto;
+import com.tuto.vle.exception.CustomException;
 import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.repositories.UniversityRepository;
 import com.tuto.vle.util.Constants;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
 public class UniversityService {
@@ -33,27 +35,25 @@ public class UniversityService {
   }
 
   public UniversityDto getUniversityDetailsByUniversityId(Integer userId, Integer universityId)
-      throws ResourceNotFoundException {
+      throws Exception {
 
     List<University> universities = universityRepository.findByUserIDANDUniversityId(userId,
         Constants.UNIVERSITY_RESOURCE_ID, universityId);
 
     if (universities.isEmpty())
-      throw new ResourceNotFoundException("No university registered to this user id : "
-          + userId.toString() + " university id : " + universityId);
+      throw new CustomException(CustomErrorCodes.UNIVERSITY_NOT_FOUND);
 
     return universities.stream().map(UniversityDto::new).collect(toSingleton());
   }
 
   public List<DivisionDto> getDivisionDetailsByUniversityId(Integer userId, Integer universityId)
-      throws ResourceNotFoundException {
+      throws Exception {
 
     List<Division> dividions = universityRepository.findDivisionsByUserIDANDUniversityId(userId,
         Constants.UNIVERSITY_RESOURCE_ID, universityId);
 
     if (dividions.isEmpty())
-      throw new ResourceNotFoundException("No division registered to this user id : "
-          + userId.toString() + " university id : " + universityId);
+      throw new CustomException(CustomErrorCodes.UNIVERSITY_NOT_FOUND);
 
     return dividions.stream().map(DivisionDto::new).collect(Collectors.toList());
   }

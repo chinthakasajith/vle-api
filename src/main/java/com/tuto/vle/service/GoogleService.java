@@ -15,7 +15,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.tuto.vle.domain.User;
 import com.tuto.vle.dto.AuthProvider;
-import com.tuto.vle.exception.UserRegisterException;
+import com.tuto.vle.exception.CustomException;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
 public class GoogleService {
@@ -93,7 +94,7 @@ public class GoogleService {
       user.setSocialToken(idTokenString);
 
     } else {
-      throw new UserRegisterException("Could not register user");
+      throw new CustomException(CustomErrorCodes.FAIL_USER_REGISTRATION);
     }
     return user;
   }

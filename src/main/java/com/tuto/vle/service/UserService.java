@@ -10,11 +10,10 @@ import com.tuto.vle.domain.User;
 import com.tuto.vle.domain.UserTokens;
 import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
-import com.tuto.vle.exception.InvalidEmailException;
-import com.tuto.vle.exception.InvalidPasswordException;
-import com.tuto.vle.exception.UserExistsException;
+import com.tuto.vle.exception.CustomException;
 import com.tuto.vle.repositories.UserRepository;
 import com.tuto.vle.repositories.UserTokensRepository;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
 public class UserService {
@@ -55,19 +54,18 @@ public class UserService {
     return webServiceRegisterResponse;
   }
 
-  public void isExistUser(String signUpRequest) {
+  public void isExistUser(String signUpRequest) throws Exception {
     if (userRepository.existsByEmail(signUpRequest)) {
-      throw new UserExistsException("User already exists");
+      throw new CustomException(CustomErrorCodes.USER_EXISTS);
     }
   }
 
-  public WebServiceLoginResponse authenticateUser(String email, String password)
-      throws RuntimeException {
+  public WebServiceLoginResponse authenticateUser(String email, String password) throws Exception {
 
     Login user = userRepository.authenticateUser(email);
 
     if (user == null)
-      throw new InvalidEmailException("No user registered to this user id : " + email);
+      throw new CustomException(CustomErrorCodes.INVALID_USERNAME);
 
     if (passwordEncoder.matches(password, user.getPassword())) {
       WebServiceLoginResponse webServiceLoginResponse = new WebServiceLoginResponse();
@@ -77,7 +75,7 @@ public class UserService {
       webServiceLoginResponse.setAccess_token(user.getToken_hash());
       return webServiceLoginResponse;
     } else {
-      throw new InvalidPasswordException("Invalid Password.");
+      throw new CustomException(CustomErrorCodes.INVALID_PASSWORD);
     }
 
   }

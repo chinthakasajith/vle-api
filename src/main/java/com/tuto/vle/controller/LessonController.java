@@ -55,7 +55,7 @@ public class LessonController {
           paramType = "header")})
   public LessonDto getModuleDetailsByModuleId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return lessonService.getLessonDetailsByLessonId(mobileUserId, id);
   }
 
@@ -69,7 +69,7 @@ public class LessonController {
           paramType = "header")})
   public List<LessonDto> getLessonDetailsByModuleId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return lessonService.getLessonDetailsByModuleId(mobileUserId, id);
   }
 

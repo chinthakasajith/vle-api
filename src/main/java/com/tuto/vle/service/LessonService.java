@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import com.tuto.vle.domain.Lesson;
 import com.tuto.vle.dto.LatestLessonDTO;
 import com.tuto.vle.dto.LessonDto;
+import com.tuto.vle.exception.CustomException;
 import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.repositories.LessonRepository;
 import com.tuto.vle.util.Constants;
+import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
 public class LessonService {
@@ -30,26 +32,23 @@ public class LessonService {
 
   }
 
-  public LessonDto getLessonDetailsByLessonId(Integer userId, Integer lessonId)
-      throws ResourceNotFoundException {
+  public LessonDto getLessonDetailsByLessonId(Integer userId, Integer lessonId) throws Exception {
 
     Lesson lesson = lessonRepository.findByUserIDANDLessonId(userId, lessonId);
 
     if (lesson == null)
-      throw new ResourceNotFoundException("No lesson registered to this user id : "
-          + userId.toString() + " lesson id : " + lessonId);
+      throw new CustomException(CustomErrorCodes.LESSON_NOT_FOUND);
 
     return new LessonDto(lesson);
   }
 
   public List<LessonDto> getLessonDetailsByModuleId(Integer userId, Integer moduleId)
-      throws ResourceNotFoundException {
+      throws Exception {
 
     List<Lesson> lessons = lessonRepository.findLessonsByUserIDANDModuleId(userId, moduleId);
 
     if (lessons.isEmpty())
-      throw new ResourceNotFoundException("No lesson registered to this user id : "
-          + userId.toString() + " module id : " + moduleId);
+      throw new CustomException(CustomErrorCodes.LESSON_NOT_FOUND);
 
     return lessons.stream().map(LessonDto::new).collect(Collectors.toList());
   }

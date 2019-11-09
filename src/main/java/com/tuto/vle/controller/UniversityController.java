@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tuto.vle.dto.DivisionDto;
 import com.tuto.vle.dto.UniversityDto;
-import com.tuto.vle.exception.ResourceNotFoundException;
 import com.tuto.vle.service.UniversityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,8 +40,7 @@ public class UniversityController {
   @GetMapping("/universities")
   @ResponseStatus(HttpStatus.OK)
   public List<UniversityDto> getAllUniversities(
-      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId)
-      throws ResourceNotFoundException {
+      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId) throws Exception {
     return universityService.getModulesByUserId(mobileUserId);
   }
 
@@ -55,7 +53,7 @@ public class UniversityController {
           paramType = "header")})
   public UniversityDto getUniversityDetailsByUniversityId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return universityService.getUniversityDetailsByUniversityId(mobileUserId, id);
   }
 
@@ -69,7 +67,7 @@ public class UniversityController {
           paramType = "header")})
   public List<DivisionDto> getDivisionDetailsByUniversityId(
       @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId,
-      @PathVariable("id") int id) throws ResourceNotFoundException {
+      @PathVariable("id") int id) throws Exception {
     return universityService.getDivisionDetailsByUniversityId(mobileUserId, id);
   }
 
