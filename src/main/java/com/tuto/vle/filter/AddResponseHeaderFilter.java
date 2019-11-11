@@ -44,7 +44,7 @@ public class AddResponseHeaderFilter implements Filter {
       if (tokenValidity == null) {
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+        httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,
             "Bearer access token replaced or expired.");
         return;
 
@@ -53,6 +53,10 @@ public class AddResponseHeaderFilter implements Filter {
         httpRequest.setAttribute("bearer-access-token", hashToken.get());
         httpRequest.setAttribute("token-id", tokenValidity.getTokenId());
       }
+    } else {
+      HttpServletResponse httpResponse = (HttpServletResponse) response;
+      httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+          "Bearer access token not present in the header.");
     }
 
     chain.doFilter(request, response);
