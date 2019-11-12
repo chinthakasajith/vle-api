@@ -19,15 +19,17 @@ import com.tuto.vle.filter.AddResponseHeaderFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/configuration/ui", "/swagger-ui.html", "/v2/api-docs",
+        "/webjars/**", "/swagger-resources/**", "/configuration/security", "/auth/register",
+        "/auth/login");
+  }
+
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests().antMatchers("/auth/**").permitAll().and().httpBasic()
         .and().authorizeRequests().anyRequest().authenticated().and()
         .addFilterBefore(new AddResponseHeaderFilter(), BasicAuthenticationFilter.class);
-  }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/auth/login").and().ignoring().antMatchers("/auth/register");
   }
 
   @Autowired

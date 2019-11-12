@@ -40,7 +40,8 @@ public class UniversityController {
   @GetMapping("/universities")
   @ResponseStatus(HttpStatus.OK)
   public List<UniversityDto> getAllUniversities(
-      @ApiIgnore @RequestAttribute("mobile-user-id") Integer mobileUserId) throws Exception {
+      @ApiIgnore @RequestAttribute(value = "mobile-user-id", required = true) Integer mobileUserId)
+      throws Exception {
     return universityService.getModulesByUserId(mobileUserId);
   }
 
