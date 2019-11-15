@@ -64,8 +64,6 @@ public class AuthController {
   public WebServiceRegisterResponse registerUser(@RequestBody SignUpRequest signUpRequest)
       throws GeneralSecurityException, IOException, Exception {
 
-    userService.isExistUser(signUpRequest.getEmail());
-
     User user = null;
 
     if (AuthProvider.google.toString().equals(signUpRequest.getSocial_type())) {
@@ -77,6 +75,8 @@ public class AuthController {
     } else if (AuthProvider.facebook.toString().equals(signUpRequest.getSocial_type())) {
       user = facebookService.getViewerData(signUpRequest.getSocial_token());
     }
+
+    userService.isExistUser(user.getEmail());
 
     return userService.persistUser(user);
   }

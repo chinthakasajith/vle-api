@@ -49,8 +49,14 @@ public class GoogleService {
         // .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
         .setIssuer("https://accounts.google.com").build();
 
+    Payload payload = null;
 
-    Payload payload = getViewerData(idTokenString);
+    if (verifier != null) {
+      payload = getViewerData(idTokenString);
+    } else {
+      throw new CustomException(CustomErrorCodes.GOOGLE_TOKEN_EXPIRED);
+    }
+
     // Use or store profile information
     User user = new User();
 

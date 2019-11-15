@@ -10,7 +10,8 @@ public enum CustomErrorCodes {
                   HttpStatus.NOT_FOUND), COURSE_NOT_FOUND(1005, "Course not found",
                       HttpStatus.NOT_FOUND), MODULE_NOT_FOUND(1006, "Module not found",
                           HttpStatus.NOT_FOUND), LESSON_NOT_FOUND(1007, "Lesson not found",
-                              HttpStatus.NOT_FOUND);
+                              HttpStatus.NOT_FOUND), GOOGLE_TOKEN_EXPIRED(1008,
+                                  "Google id_token expired", HttpStatus.BAD_REQUEST);
 
   private final int id;
   private final String msg;
