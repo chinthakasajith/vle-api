@@ -58,7 +58,7 @@ public class User implements Serializable {
   private String publicUserId;
   @Column(unique = true, nullable = false, length = 190)
   private String email;
-  @Column(nullable = false, length = 128)
+  @Column(length = 128)
   private String password;
   @Column(name = "first_name", length = 100)
   private String firstName;
@@ -87,7 +87,7 @@ public class User implements Serializable {
   private String sourceDescription;
   @Column(name = "social_type", length = 45)
   private String socialType;
-  @Column(name = "social_token", length = 500)
+  @Column(name = "social_token", length = 1000)
   private String socialToken;
 
   /** Default constructor. */
