@@ -5,9 +5,9 @@ import com.tuto.vle.domain.User;
 import com.tuto.vle.dto.SignUpRequest;
 
 @Service
-public class CustomAuthService {
+public class CustomAuthService implements AuthenticationService {
 
-  public User getCustomLoginUser(SignUpRequest signUpRequest) {
+  public User getViewerUserData(SignUpRequest signUpRequest) throws Exception {
     User user = new User();
     user.setLastName(signUpRequest.getName());
     user.setEmail(signUpRequest.getEmail());

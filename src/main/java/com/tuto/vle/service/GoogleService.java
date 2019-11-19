@@ -15,11 +15,12 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.tuto.vle.domain.User;
 import com.tuto.vle.dto.AuthProvider;
+import com.tuto.vle.dto.SignUpRequest;
 import com.tuto.vle.exception.CustomException;
 import com.tuto.vle.util.CustomErrorCodes;
 
 @Service
-public class GoogleService {
+public class GoogleService implements AuthenticationService {
 
   private HttpTransport httpTransport;
 
@@ -36,7 +37,7 @@ public class GoogleService {
 
   }
 
-  public User getVerifiedUser(String idTokenString)
+  public User getViewerUserData(SignUpRequest signUpRequest)
       throws GeneralSecurityException, IOException, Exception {
 
     httpTransport = new NetHttpTransport();
@@ -52,9 +53,7 @@ public class GoogleService {
     Payload payload = null;
 
     if (verifier != null) {
-      payload = getViewerData(idTokenString);
-    } else {
-      throw new CustomException(CustomErrorCodes.GOOGLE_TOKEN_EXPIRED);
+      payload = getViewerData(signUpRequest.getSocial_token());
     }
 
     // Use or store profile information
@@ -75,11 +74,12 @@ public class GoogleService {
     String givenName = (String) payload.get("given_name");
 
 
+    user.setFirstName(name);
     user.setLastName(familyName);
     user.setEmail(email);
     // user.setPassword(signUpRequest.getPassword());
     user.setSocialType(AuthProvider.google.toString());
-    user.setSocialToken(idTokenString);
+    user.setSocialToken(signUpRequest.getSocial_token());
     return user;
   }
 
@@ -91,10 +91,10 @@ public class GoogleService {
       if (idToken != null) {
         payload = idToken.getPayload();
       } else {
-        throw new CustomException(CustomErrorCodes.FAIL_USER_REGISTRATION);
+        throw new CustomException(CustomErrorCodes.GOOGLE_TOKEN_EXPIRED);
       }
     } catch (GeneralSecurityException es) {
-      es.printStackTrace();
+      throw new CustomException(CustomErrorCodes.FAIL_USER_REGISTRATION);
 
     } catch (IOException ei) {
       ei.printStackTrace();

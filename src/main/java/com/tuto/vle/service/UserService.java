@@ -8,7 +8,6 @@ import com.tuto.vle.domain.Login;
 import com.tuto.vle.domain.Token;
 import com.tuto.vle.domain.User;
 import com.tuto.vle.domain.UserTokens;
-import com.tuto.vle.dto.WebServiceLoginResponse;
 import com.tuto.vle.dto.WebServiceRegisterResponse;
 import com.tuto.vle.exception.CustomException;
 import com.tuto.vle.repositories.UserRepository;
@@ -60,22 +59,32 @@ public class UserService {
     }
   }
 
-  public WebServiceLoginResponse authenticateUser(String email, String password) throws Exception {
+  public User findUserByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
+  public WebServiceRegisterResponse authenticateUser(String email, String password)
+      throws Exception {
 
     Login user = userRepository.authenticateUser(email);
 
     if (user == null)
       throw new CustomException(CustomErrorCodes.INVALID_USERNAME);
 
-    if (passwordEncoder.matches(password, user.getPassword())) {
-      WebServiceLoginResponse webServiceLoginResponse = new WebServiceLoginResponse();
-      webServiceLoginResponse.setUserId(user.getUser_id());
-      webServiceLoginResponse.setUsername(user.getEmail());
-      webServiceLoginResponse.setSocialType(user.getSocial_type());
-      webServiceLoginResponse.setAccess_token(user.getToken_hash());
-      return webServiceLoginResponse;
+    WebServiceRegisterResponse webServiceLoginResponse = new WebServiceRegisterResponse();
+    webServiceLoginResponse.setUserId(user.getUser_id());
+    webServiceLoginResponse.setUsername(user.getEmail());
+    webServiceLoginResponse.setSocialType(user.getSocial_type());
+    webServiceLoginResponse.setAccess_token(user.getToken_hash());
+
+    if (password != null) {
+      if (passwordEncoder.matches(password, user.getPassword())) {
+        return webServiceLoginResponse;
+      } else {
+        throw new CustomException(CustomErrorCodes.INVALID_PASSWORD);
+      }
     } else {
-      throw new CustomException(CustomErrorCodes.INVALID_PASSWORD);
+      return webServiceLoginResponse;
     }
 
   }
