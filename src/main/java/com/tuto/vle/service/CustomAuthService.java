@@ -10,14 +10,14 @@ import com.tuto.vle.dto.SignUpRequest;
 public class CustomAuthService implements AuthenticationService {
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  PasswordEncoder passwordEncoder;
 
   public User getViewerUserData(SignUpRequest signUpRequest) throws Exception {
 
     User user = new User();
     user.setLastName(signUpRequest.getName());
     user.setEmail(signUpRequest.getEmail());
-    user.setPassword(user.getPassword());
+    user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
     user.setSocialType(signUpRequest.getSocial_type());
     return user;
   }

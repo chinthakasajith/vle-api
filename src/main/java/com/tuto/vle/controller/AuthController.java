@@ -3,7 +3,6 @@ package com.tuto.vle.controller;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,8 +52,11 @@ public class AuthController {
   @Autowired
   StudentService studentService;
 
+  // @Autowired
+  // PasswordEncoder passwordEncoder;
+
   @Autowired
-  PasswordEncoder passwordEncoder;
+  AuthenticationFactory authenticationFactory;
 
   @PostMapping("/login")
   @ApiOperation(value = "Login endpoint", response = WebServiceLoginResponse.class)
@@ -73,11 +75,11 @@ public class AuthController {
   public WebServiceRegisterResponse registerUser(@RequestBody SignUpRequest signUpRequest)
       throws GeneralSecurityException, IOException, Exception {
 
-    if (signUpRequest.getPassword() != null) {
-      signUpRequest.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-    }
+    // if (signUpRequest.getPassword() != null) {
+    // signUpRequest.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+    // }
 
-    User user = new AuthenticationFactory().getAuthService(signUpRequest.getSocial_type())
+    User user = authenticationFactory.getAuthService(signUpRequest.getSocial_type())
         .getViewerUserData(signUpRequest);
 
     if (userService.findUserByEmail(user.getEmail()) != null) {

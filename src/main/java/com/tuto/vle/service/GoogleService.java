@@ -45,8 +45,7 @@ public class GoogleService implements AuthenticationService {
 
     verifier = new GoogleIdTokenVerifier.Builder(httpTransport, jsonFactory)
         // Specify the CLIENT_ID of the app that accesses the backend:
-        .setAudience(Collections.singletonList(
-            "491558166033-c14m59cv5b2cgikkktvi56lvu87ivfjj.apps.googleusercontent.com"))
+        .setAudience(Collections.singletonList(google_clientId))
         // Or, if multiple clients access the backend:
         // .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
         .setIssuer("https://accounts.google.com").build();
