@@ -17,7 +17,7 @@ public class CustomAuthService implements AuthenticationService {
     User user = new User();
     user.setLastName(signUpRequest.getName());
     user.setEmail(signUpRequest.getEmail());
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setPassword(user.getPassword());
     user.setSocialType(signUpRequest.getSocial_type());
     return user;
   }
