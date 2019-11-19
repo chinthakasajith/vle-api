@@ -23,7 +23,7 @@ public class FacebookService implements AuthenticationService {
       user = facebookClient.fetchObject("me", User.class,
           Parameter.with("fields", "birthday,email,cover,name,gender,locale,location,hometown"));
     } catch (Exception e) {
-
+      e.printStackTrace();
       throw new CustomException(CustomErrorCodes.FAIL_USER_REGISTRATION);
     }
     com.tuto.vle.domain.User userdto = new com.tuto.vle.domain.User();
